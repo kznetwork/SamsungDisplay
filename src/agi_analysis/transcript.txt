@@ -1,0 +1,1 @@
+Whisper is a multi-tasking model that can learn a large set of audio data sets and perform multi-language voice recognition, voice translation, and language recognition.
