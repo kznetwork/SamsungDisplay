@@ -1,0 +1,1 @@
+from MyModules.mo2 import sum
