@@ -1,0 +1,264 @@
+“
+당신은 전문 데이터분석가이다. Data Analysis를 이용해 업로드한 엑셀 파일로부터 가능한 탐색적 데이터 분석(EDA)를 모두 수행해줘.
+
+#제약조건
+- 가능한 모든 경우를 수행해 줘.
+
+#도출과정
+-EDA를 할 수 있는 항목들을 목록으로 제시한다.
+-각 목록에 대해서 분석을 진행하고, 결과를 표화 시가화로 제시한다.
+분석 결과를 자세하게 해석한다.
+“
+
+
+*****
+
+Sub GenerateRandomScores()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Integer, j As Integer
+    Dim score As Integer
+    
+    For i = 1 To 1000 ' 행
+        For j = 1 To 5 ' 열
+            score = Application.WorksheetFunction.RandBetween(60, 100)
+            ws.Cells(i, j).Value = score
+        Next j
+    Next i
+    
+    MsgBox "Random scores generated successfully!"
+End Sub
+
+
+*****
+
+2행_1001행, b열 ~ f열 숫자를 더해서 값을 행별로 G열에 작성해 주고, G열에 작성된 값을 5로 나눠서 H열에 작성해 줘.
+
+
+*****
+….
+Sub SumAndDivide()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Long
+    Dim sumValue As Double
+    
+    For i = 2 To 1001 ' 2행부터 1001행까지
+        ' B열부터 F열까지의 합을 G열에 작성
+        sumValue = Application.WorksheetFunction.Sum(ws.Range("B" & i & ":F" & i))
+        ws.Cells(i, 7).Value = sumValue ' G열에 합계 작성
+        
+        ' G열의 값을 5로 나누어 H열에 작성
+        ws.Cells(i, 8).Value = sumValue / 5 ' H열에 나눈 값 작성
+    Next i
+    
+    MsgBox "Sum and divide operations completed successfully!"
+End Sub
+
+*****
+
+
+….
+Sub SumAndDivide()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Long
+    Dim sumValue As Double
+    
+    For i = 2 To 1001 ' 2행부터 1001행까지
+        ' B열부터 F열까지의 합을 G열에 작성
+        sumValue = Application.WorksheetFunction.Sum(ws.Range("B" & i & ":F" & i))
+        ws.Cells(i, 7).Value = sumValue ' G열에 합계 작성
+        
+        ' G열의 값을 5로 나누어 H열에 작성
+        ws.Cells(i, 8).Value = sumValue / 5 ' H열에 나눈 값 작성
+    Next i
+    
+    MsgBox "Sum and divide operations completed successfully!"
+End Sub
+
+
+
+*****
+2행부터 H열의 평균값을 비교하여 숫자 크기에 따라 '1'부터 '1000'까지 순위를 I열에 명시해주는 VBA 코드를 작성해 줘.
+
+
+*****
+
+
+Sub RankByColumnH()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Long, j As Long
+    Dim lastRow As Long
+    Dim hValues() As Double
+    Dim ranks() As Long
+    
+    ' 마지막 행 수 설정
+    lastRow = 1000 ' 2행부터 1001행까지이므로 1000행
+    
+    ' 배열 크기 설정
+    ReDim hValues(1 To lastRow)
+    ReDim ranks(1 To lastRow)
+    
+    ' H열 값 배열에 저장
+    For i = 1 To lastRow
+        hValues(i) = ws.Cells(i + 1, 8).Value ' H열의 값을 배열에 저장
+    Next i
+    
+    ' 순위 계산
+    For i = 1 To lastRow
+        ranks(i) = 1 ' 초기 순위는 1
+        For j = 1 To lastRow
+            If hValues(i) < hValues(j) Then
+                ranks(i) = ranks(i) + 1 ' 다른 값과 비교하여 순위 증가
+            End If
+        Next j
+    Next i
+    
+    ' I열에 순위 작성
+    For i = 1 To lastRow
+        ws.Cells(i + 1, 9).Value = ranks(i) ' I열에 순위 작성 (열 번호 9는 I열을 의미)
+    Next i
+    
+    MsgBox "Ranking completed successfully!"
+End Sub
+
+
+*****
+
+Sub RankByColumnH()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Long, j As Long
+    Dim lastRow As Long
+    Dim hValues() As Double
+    Dim ranks() As Long
+    
+    ' 마지막 행 수 설정
+    lastRow = 1000 ' 2행부터 1001행까지이므로 1000행
+    
+    ' 배열 크기 설정
+    ReDim hValues(1 To lastRow)
+    ReDim ranks(1 To lastRow)
+    
+    ' H열 값 배열에 저장
+    For i = 1 To lastRow
+        hValues(i) = ws.Cells(i + 1, 8).Value ' H열의 값을 배열에 저장
+    Next i
+    
+    ' 순위 계산
+    For i = 1 To lastRow
+        ranks(i) = 1 ' 초기 순위는 1
+        For j = 1 To lastRow
+            If hValues(i) < hValues(j) Then
+                ranks(i) = ranks(i) + 1 ' 다른 값과 비교하여 순위 증가
+            End If
+        Next j
+    Next i
+    
+    ' I열에 순위 작성
+    For i = 1 To lastRow
+        ws.Cells(i + 1, 9).Value = ranks(i) ' I열에 순위 작성 (열 번호 9는 I열을 의미)
+    Next i
+    
+    MsgBox "Ranking completed successfully!"
+End Sub
+
+
+*****
+
+2행부터 I열 내용을 검토하여 1~200에 해당할 경우 J열에 '합격'으로 명시하고, I열을 검토하여 201보다 큰 숫자일 경우 J열에 '불합격'으로 명시하는 vba 코드를 작성해 줘.
+
+*****
+
+2행부터 I열 내용을 검토하여 1~200에 해당할 경우 J열에 '합격'으로 명시하고, I열을 검토하여 201보다 큰 숫자일 경우 J열에 '불합격'으로 명시하는 vba 코드를 작성해 줘.
+
+*****
+
+Sub CheckPassFail()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1") ' 원하는 시트 이름으로 변경
+    
+    Dim i As Long
+    Dim lastRow As Long
+    Dim rankValue As Long
+    
+    ' 마지막 행 수 설정
+    lastRow = 1000 ' 2행부터 1001행까지이므로 1000행
+    
+    ' I열의 값을 검토하여 J열에 합격/불합격 명시
+    For i = 2 To lastRow + 1 ' 2행부터 1001행까지
+        rankValue = ws.Cells(i, 9).Value ' I열의 값 가져오기 (열 번호 9는 I열을 의미)
+        
+        If rankValue >= 1 And rankValue <= 200 Then
+            ws.Cells(i, 10).Value = "합격" ' J열에 합격 명시 (열 번호 10은 J열을 의미)
+        ElseIf rankValue > 200 Then
+            ws.Cells(i, 10).Value = "불합격" ' J열에 불합격 명시
+        End If
+    Next i
+    
+    MsgBox "Pass/Fail check completed successfully!"
+End Sub
+
+
+*****
+
+파일 : 직원1.xlsx
+
+VBScript를 이용해서 [사번][부서][직책][이름][이메일주소]칼럼을 가지는 엑셀 파일을 생성하고, 임의의 직원 3명을 만들어 줘
+
+
+*****
+
+' Create an instance of Excel application
+Set objExcel = CreateObject("Excel.Application")
+objExcel.Visible = True ' Show Excel application window
+
+' Add a new workbook
+Set objWorkbook = objExcel.Workbooks.Add()
+
+' Activate the first sheet
+Set objSheet = objWorkbook.Sheets(1)
+objSheet.Activate
+
+' Set column headers
+objSheet.Cells(1, 1).Value = "사번"
+objSheet.Cells(1, 2).Value = "부서"
+objSheet.Cells(1, 3).Value = "직책"
+objSheet.Cells(1, 4).Value = "이름"
+objSheet.Cells(1, 5).Value = "이메일주소"
+
+' Generate data for three employees (you can modify this part)
+employeeData = Array( _
+    Array("1001", "영업부", "과장", "홍길동", "hong@example.com"), _
+    Array("1002", "인사부", "대리", "김철수", "kim@example.com"), _
+    Array("1003", "개발부", "주임", "이영희", "lee@example.com") _
+)
+
+' Populate the data in the sheet
+For i = 0 To UBound(employeeData)
+    For j = 0 To UBound(employeeData(i))
+        objSheet.Cells(i + 2, j + 1).Value = employeeData(i)(j)
+    Next
+Next
+
+' Save the workbook (adjust the path as needed)
+objWorkbook.SaveAs "C:\Path\To\Your\File.xlsx"
+
+' Close Excel and clean up objects
+objWorkbook.Close
+objExcel.Quit
+
+Set objSheet = Nothing
+Set objWorkbook = Nothing
+Set objExcel = Nothing
+
+
+*****
+
